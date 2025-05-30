@@ -2,21 +2,6 @@
 import { PiiPatterns } from '@/types/pii';
 
 export const PII_PATTERNS: PiiPatterns = {
-  name: {
-    pattern: /\b[A-Z][a-z]+ [A-Z][a-z]+(?:\s[A-Z][a-z]+)?\b/g,
-    color: 'bg-indigo-500/20 text-indigo-200 border-indigo-400/40',
-    placeholder: 'NAME'
-  },
-  email: {
-    pattern: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g,
-    color: 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40',
-    placeholder: 'EMAIL'
-  },
-  phone: {
-    pattern: /(?:\+?1[-.\s]?)?\(?[0-9]{3}\)?[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}\b/g,
-    color: 'bg-violet-500/20 text-violet-200 border-violet-400/40',
-    placeholder: 'PHONE'
-  },
   ssn: {
     pattern: /\b\d{3}-\d{2}-\d{4}\b/g,
     color: 'bg-rose-500/20 text-rose-200 border-rose-400/40',
@@ -27,10 +12,25 @@ export const PII_PATTERNS: PiiPatterns = {
     color: 'bg-amber-500/20 text-amber-200 border-amber-400/40',
     placeholder: 'CARD'
   },
+  phone: {
+    pattern: /(?:\+?1[-.\s]?)?\(?[0-9]{3}\)?[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}\b/g,
+    color: 'bg-violet-500/20 text-violet-200 border-violet-400/40',
+    placeholder: 'PHONE'
+  },
+  email: {
+    pattern: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g,
+    color: 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40',
+    placeholder: 'EMAIL'
+  },
   address: {
-    pattern: /\d+\s+[A-Za-z\s]+(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|Place|Pl|Court|Ct|Way)\b/gi,
+    pattern: /\b\d+\s+[A-Za-z\s]+(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|Place|Pl|Court|Ct|Way)\b/gi,
     color: 'bg-cyan-500/20 text-cyan-200 border-cyan-400/40',
     placeholder: 'ADDRESS'
+  },
+  name: {
+    pattern: /\b[A-Z][a-z]{2,}\s+[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?\b/g,
+    color: 'bg-indigo-500/20 text-indigo-200 border-indigo-400/40',
+    placeholder: 'NAME'
   }
 };
 
@@ -39,6 +39,7 @@ export const anonymizeText = (text: string) => {
   const newMappings: Record<string, string> = {};
   const counters: Record<string, number> = {};
 
+  // Process patterns in order of specificity (most specific first)
   Object.entries(PII_PATTERNS).forEach(([type, config]) => {
     counters[type] = 1;
     anonymizedText = anonymizedText.replace(config.pattern, (match) => {
@@ -55,7 +56,7 @@ export const anonymizeText = (text: string) => {
 export const reidentifyText = (text: string, mappings: Record<string, string>) => {
   let reidentifiedText = text;
   Object.entries(mappings).forEach(([placeholder, original]) => {
-    reidentifiedText = reidentifiedText.replace(new RegExp(placeholder, 'g'), original);
+    reidentifiedText = reidentifiedText.replace(new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), original);
   });
   return reidentifiedText;
 };
