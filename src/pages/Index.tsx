@@ -7,24 +7,28 @@ import { Header } from '@/components/pii/Header';
 import { StatsBar } from '@/components/pii/StatsBar';
 import { TextInputCard } from '@/components/pii/TextInputCard';
 import { ResponseCard } from '@/components/pii/ResponseCard';
-import { CopyAnonymizedSection } from '@/components/pii/CopyAnonymizedSection';
 import { PiiMappingsDisplay } from '@/components/pii/PiiMappingsDisplay';
 import { ActionButtons } from '@/components/pii/ActionButtons';
+import { PiiTypeSelector } from '@/components/pii/PiiTypeSelector';
+import { Footer } from '@/components/pii/Footer';
 
 const Index = () => {
   const [originalText, setOriginalText] = useState('');
   const [aiResponse, setAiResponse] = useState('');
   const [piiMappings, setPiiMappings] = useState<PiiMappings>({});
   const [showOriginal, setShowOriginal] = useState(true);
+  const [selectedPiiTypes, setSelectedPiiTypes] = useState<string[]>([
+    'NAME', 'EMAIL', 'PHONE', 'ADDRESS', 'CREDIT_CARD', 'SSN'
+  ]);
   const { toast } = useToast();
 
   // Get anonymized version of original text
   const anonymizedText = useMemo(() => {
     if (!originalText) return '';
-    const result = anonymizeText(originalText);
+    const result = anonymizeText(originalText, selectedPiiTypes);
     setPiiMappings(result.mappings);
     return result.anonymizedText;
-  }, [originalText]);
+  }, [originalText, selectedPiiTypes]);
 
   // Get re-identified version of AI response
   const reidentifiedResponse = useMemo(() => {
@@ -60,11 +64,16 @@ const Index = () => {
   const detectedPIICount = Object.keys(piiMappings).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-purple-950">
+    <div className="min-h-screen bg-gradient-to-br from-[#0E2954] via-[#1F6E8C] to-[#2E8A99]">
       <div className="container mx-auto px-4 py-8">
         <Header />
         
         <StatsBar detectedPIICount={detectedPIICount} showOriginal={showOriginal} />
+
+        <PiiTypeSelector 
+          selectedTypes={selectedPiiTypes}
+          onSelectionChange={setSelectedPiiTypes}
+        />
 
         <div className="grid lg:grid-cols-2 gap-6 mb-8">
           <TextInputCard
@@ -84,15 +93,12 @@ const Index = () => {
           />
         </div>
 
-        <CopyAnonymizedSection
-          anonymizedText={anonymizedText}
-          copyToClipboard={copyToClipboard}
-        />
-
         <PiiMappingsDisplay piiMappings={piiMappings} />
 
         <ActionButtons resetAll={resetAll} />
       </div>
+      
+      <Footer />
     </div>
   );
 };
