@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { piiPatterns } from '@/utils/piiDetection';
+import { PII_PATTERNS } from '@/utils/piiDetection';
 
 interface PiiTypeSelectorProps {
   selectedTypes: string[];
@@ -10,7 +10,7 @@ interface PiiTypeSelectorProps {
 }
 
 export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSelectorProps) => {
-  const allTypes = Object.keys(piiPatterns);
+  const allTypes = Object.keys(PII_PATTERNS);
   
   const handleTypeToggle = (type: string) => {
     if (selectedTypes.includes(type)) {
@@ -29,9 +29,9 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
   };
 
   return (
-    <div className="mb-6 p-4 bg-slate-900/40 rounded-lg border border-slate-700/50">
+    <div className="mb-6 p-4 bg-[#0E2954]/40 rounded-lg border border-[#1F6E8C]/50">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-slate-100">Select PII Types to Anonymize</h3>
+        <h3 className="text-lg font-semibold text-white">Select PII Types to Anonymize</h3>
         <div className="flex gap-2">
           <button
             onClick={handleSelectAll}
@@ -41,7 +41,7 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
           </button>
           <button
             onClick={handleSelectNone}
-            className="text-sm px-3 py-1 bg-slate-600 text-white rounded hover:bg-slate-700 transition-colors"
+            className="text-sm px-3 py-1 bg-[#2E8A99] text-white rounded hover:bg-[#1F6E8C] transition-colors"
           >
             Clear All
           </button>
@@ -56,7 +56,7 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
             className={`cursor-pointer transition-all ${
               selectedTypes.includes(type)
                 ? 'bg-[#2E8A99] text-white hover:bg-[#1F6E8C]'
-                : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                : 'bg-[#84A7A1]/30 text-slate-300 hover:bg-[#84A7A1]/50'
             }`}
             onClick={() => handleTypeToggle(type)}
           >
