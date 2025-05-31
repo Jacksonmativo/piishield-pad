@@ -3,26 +3,26 @@ import { Shield, Lock, Eye, AlertTriangle } from "lucide-react";
 
 export const Footer = () => {
   return (
-    <footer className="mt-16 bg-gradient-to-r from-[#0b0909] via-[#44444c] to-[#0b0909] text-white border-t border-[#44444c]/50">
+    <footer className="mt-16 text-white border-t" style={{ backgroundColor: 'rgba(4, 3, 65, 0.6)', borderColor: '#ccc' }}>
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* AI Safety Tips */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Shield className="w-5 h-5 text-[#d6d6d6]" />
-              <h3 className="text-lg font-semibold">AI Safety Tips</h3>
+              <Shield className="w-5 h-5" style={{ color: '#249CFF' }} />
+              <h3 className="text-lg font-semibold text-white">AI Safety Tips</h3>
             </div>
-            <ul className="space-y-2 text-sm text-[#8c8c8c]">
+            <ul className="space-y-2 text-sm" style={{ color: 'darkgray' }}>
               <li className="flex items-start gap-2">
-                <Lock className="w-4 h-4 mt-0.5 text-[#d6d6d6] flex-shrink-0" />
+                <Lock className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#249CFF' }} />
                 Always anonymize personal data before sharing with AI
               </li>
               <li className="flex items-start gap-2">
-                <Eye className="w-4 h-4 mt-0.5 text-[#d6d6d6] flex-shrink-0" />
+                <Eye className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#249CFF' }} />
                 Review all outputs before using them
               </li>
               <li className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 mt-0.5 text-[#d6d6d6] flex-shrink-0" />
+                <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#249CFF' }} />
                 Never share sensitive data directly
               </li>
             </ul>
@@ -30,8 +30,8 @@ export const Footer = () => {
 
           {/* Best Practices */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Best Practices</h3>
-            <ul className="space-y-2 text-sm text-[#8c8c8c]">
+            <h3 className="text-lg font-semibold mb-4 text-white">Best Practices</h3>
+            <ul className="space-y-2 text-sm" style={{ color: 'darkgray' }}>
               <li>• Use unique placeholders for different data types</li>
               <li>• Keep anonymization mappings secure</li>
               <li>• Verify data restoration accuracy</li>
@@ -41,8 +41,8 @@ export const Footer = () => {
 
           {/* Supported Data Types */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Protected Data</h3>
-            <ul className="space-y-2 text-sm text-[#8c8c8c]">
+            <h3 className="text-lg font-semibold mb-4 text-white">Protected Data</h3>
+            <ul className="space-y-2 text-sm" style={{ color: 'darkgray' }}>
               <li>• Personal names and identifiers</li>
               <li>• Email addresses and phone numbers</li>
               <li>• Financial and credit card data</li>
@@ -54,9 +54,9 @@ export const Footer = () => {
 
           {/* Security Notice */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Security Notice</h3>
-            <div className="bg-[#0b0909]/50 p-4 rounded-lg border border-[#d6d6d6]/30 backdrop-blur-sm">
-              <p className="text-sm text-[#8c8c8c] leading-relaxed">
+            <h3 className="text-lg font-semibold mb-4 text-white">Security Notice</h3>
+            <div className="p-4 rounded-lg border shadow-sm" style={{ backgroundColor: '#fafafa', borderColor: '#ccc' }}>
+              <p className="text-sm leading-relaxed" style={{ color: 'darkgray' }}>
                 PII Shield helps protect your privacy when interacting with AI systems. 
                 Always verify that sensitive information is properly anonymized before 
                 sharing with any external service.
@@ -65,8 +65,8 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-[#d6d6d6]/30 mt-8 pt-8 text-center">
-          <p className="text-sm text-[#8c8c8c]">
+        <div className="border-t mt-8 pt-8 text-center" style={{ borderColor: '#ccc' }}>
+          <p className="text-sm text-white">
             © 2024 PII Shield. Protecting your privacy in AI interactions.
           </p>
         </div>

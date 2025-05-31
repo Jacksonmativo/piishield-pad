@@ -18,11 +18,11 @@ export const ResponseCard = ({
   copyToClipboard
 }: ResponseCardProps) => {
   return (
-    <Card className="bg-[#44444c]/60 border-[#8c8c8c]/50 backdrop-blur-sm shadow-xl shadow-[#0b0909]/20">
+    <Card className="shadow-xl" style={{ backgroundColor: '#fafafa', borderColor: '#ccc' }}>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-[#d6d6d6] flex items-center gap-2">
-            <div className="w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full shadow-lg shadow-purple-500/50"></div>
+          <CardTitle style={{ color: 'darkgray' }} className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full shadow-lg" style={{ backgroundColor: '#249CFF' }}></div>
             Step 2: Paste AI Response
           </CardTitle>
           <Button
@@ -30,7 +30,8 @@ export const ResponseCard = ({
             size="sm"
             onClick={() => copyToClipboard(reidentifiedResponse, 'Re-identified response')}
             disabled={!aiResponse}
-            className="text-[#8c8c8c] hover:text-white hover:bg-[#8c8c8c]/50"
+            className="hover:bg-gray-100"
+            style={{ color: 'darkgray' }}
           >
             <Copy className="w-4 h-4" />
           </Button>
@@ -41,22 +42,24 @@ export const ResponseCard = ({
           placeholder="Paste the AI's response here. Any anonymized placeholders will be automatically restored to original PII..."
           value={aiResponse}
           onChange={(e) => setAiResponse(e.target.value)}
-          className="min-h-[300px] bg-[#0b0909]/50 border-[#8c8c8c]/50 text-[#d6d6d6] placeholder:text-[#8c8c8c] focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+          className="min-h-[300px] text-black placeholder:text-gray-500 focus:ring-2 transition-all"
+          style={{ backgroundColor: 'white', borderColor: '#ccc', focusRingColor: '#249CFF' }}
         />
         {aiResponse && (
-          <div className="mt-4 p-4 bg-[#0b0909]/50 rounded-lg border border-[#8c8c8c]/50 shadow-inner">
+          <div className="mt-4 p-4 rounded-lg border shadow-inner" style={{ backgroundColor: 'white', borderColor: '#ccc' }}>
             <div className="flex justify-between items-center mb-2">
-              <div className="text-sm font-medium text-[#d6d6d6]">Re-identified Preview:</div>
+              <div className="text-sm font-medium" style={{ color: 'darkgray' }}>Re-identified Preview:</div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => copyToClipboard(reidentifiedResponse, 'Re-identified response')}
-                className="text-[#8c8c8c] hover:text-white hover:bg-[#8c8c8c]/50 h-6 px-2"
+                className="h-6 px-2 hover:bg-gray-100"
+                style={{ color: 'darkgray' }}
               >
                 <Copy className="w-3 h-3" />
               </Button>
             </div>
-            <div className="text-[#d6d6d6] text-sm leading-relaxed whitespace-pre-wrap">
+            <div className="text-sm leading-relaxed whitespace-pre-wrap" style={{ color: 'darkgray' }}>
               {reidentifiedResponse}
             </div>
           </div>

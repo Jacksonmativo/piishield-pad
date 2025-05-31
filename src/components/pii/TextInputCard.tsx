@@ -23,11 +23,11 @@ export const TextInputCard = ({
   copyToClipboard
 }: TextInputCardProps) => {
   return (
-    <Card className="bg-[#44444c]/60 border-[#8c8c8c]/50 backdrop-blur-sm shadow-xl shadow-[#0b0909]/20">
+    <Card className="shadow-xl" style={{ backgroundColor: '#fafafa', borderColor: '#ccc' }}>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-[#d6d6d6] flex items-center gap-2">
-            <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full animate-pulse shadow-lg shadow-blue-500/50"></div>
+          <CardTitle style={{ color: 'darkgray' }} className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full animate-pulse shadow-lg" style={{ backgroundColor: '#249CFF' }}></div>
             Step 1: Paste Your Content
           </CardTitle>
           <div className="flex items-center gap-2">
@@ -35,7 +35,8 @@ export const TextInputCard = ({
               variant="ghost"
               size="sm"
               onClick={() => setShowOriginal(!showOriginal)}
-              className="text-[#8c8c8c] hover:text-white hover:bg-[#8c8c8c]/50"
+              className="hover:bg-gray-100"
+              style={{ color: 'darkgray' }}
             >
               {showOriginal ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
             </Button>
@@ -44,7 +45,8 @@ export const TextInputCard = ({
               size="sm"
               onClick={() => copyToClipboard(showOriginal ? originalText : anonymizedText, showOriginal ? 'Original text' : 'Anonymized text')}
               disabled={!originalText}
-              className="text-[#8c8c8c] hover:text-white hover:bg-[#8c8c8c]/50"
+              className="hover:bg-gray-100"
+              style={{ color: 'darkgray' }}
             >
               <Copy className="w-4 h-4" />
             </Button>
@@ -56,13 +58,15 @@ export const TextInputCard = ({
           placeholder="Paste your content here. Any PII will be automatically detected and can be anonymized..."
           value={originalText}
           onChange={(e) => setOriginalText(e.target.value)}
-          className="min-h-[300px] bg-[#0b0909]/50 border-[#8c8c8c]/50 text-[#d6d6d6] placeholder:text-[#8c8c8c] focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+          className="min-h-[300px] text-black placeholder:text-gray-500 focus:ring-2 transition-all"
+          style={{ backgroundColor: 'white', borderColor: '#ccc', focusRingColor: '#249CFF' }}
         />
         {originalText && !showOriginal && (
-          <div className="mt-4 p-4 bg-[#0b0909]/50 rounded-lg border border-[#8c8c8c]/50 shadow-inner">
-            <div className="text-sm font-medium text-[#d6d6d6] mb-2">Anonymized Preview:</div>
+          <div className="mt-4 p-4 rounded-lg border shadow-inner" style={{ backgroundColor: 'white', borderColor: '#ccc' }}>
+            <div className="text-sm font-medium mb-2" style={{ color: 'darkgray' }}>Anonymized Preview:</div>
             <div 
-              className="text-[#d6d6d6] text-sm leading-relaxed"
+              className="text-sm leading-relaxed"
+              style={{ color: 'darkgray' }}
               dangerouslySetInnerHTML={{ __html: highlightPII(anonymizedText) }}
             />
           </div>

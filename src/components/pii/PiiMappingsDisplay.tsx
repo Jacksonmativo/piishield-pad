@@ -13,21 +13,21 @@ export const PiiMappingsDisplay = ({ piiMappings }: PiiMappingsDisplayProps) => 
   }
 
   return (
-    <Card className="bg-slate-900/40 border-slate-700/50 shadow-xl shadow-slate-900/20">
+    <Card className="shadow-xl" style={{ backgroundColor: '#fafafa', borderColor: '#ccc' }}>
       <CardHeader>
-        <CardTitle className="text-slate-100 flex items-center gap-2">
-          <Shield className="w-5 h-5 text-indigo-400" />
+        <CardTitle style={{ color: 'darkgray' }} className="flex items-center gap-2">
+          <Shield className="w-5 h-5" style={{ color: '#249CFF' }} />
           Detected PII Mappings
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {Object.entries(piiMappings).map(([placeholder, original]) => (
-            <div key={placeholder} className="p-3 bg-slate-800/50 rounded-lg border border-slate-600/50 shadow-sm">
-              <div className="text-xs text-slate-400 mb-1">Placeholder</div>
-              <div className="text-sm text-indigo-300 font-mono mb-2">{placeholder}</div>
-              <div className="text-xs text-slate-400 mb-1">Original</div>
-              <div className="text-sm text-slate-100 font-mono">{original}</div>
+            <div key={placeholder} className="p-3 rounded-lg border shadow-sm" style={{ backgroundColor: '#ccc', borderColor: '#ccc' }}>
+              <div className="text-xs mb-1" style={{ color: 'darkgray' }}>Placeholder</div>
+              <div className="text-sm font-mono mb-2" style={{ color: '#249CFF' }}>{placeholder}</div>
+              <div className="text-xs mb-1" style={{ color: 'darkgray' }}>Original</div>
+              <div className="text-sm font-mono text-white">{original}</div>
             </div>
           ))}
         </div>
