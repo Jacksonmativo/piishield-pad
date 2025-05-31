@@ -29,19 +29,19 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
   };
 
   return (
-    <div className="mb-6 p-4 bg-[#0E2954]/40 rounded-lg border border-[#1F6E8C]/50">
+    <div className="mb-6 p-4 bg-[#0b0909]/40 rounded-lg border border-[#44444c]/50 backdrop-blur-sm shadow-xl">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-white">Select PII Types to Anonymize</h3>
         <div className="flex gap-2">
           <button
             onClick={handleSelectAll}
-            className="text-sm px-3 py-1 bg-[#1F6E8C] text-white rounded hover:bg-[#0E2954] transition-colors"
+            className="text-sm px-3 py-1 bg-[#44444c] text-white rounded hover:bg-[#8c8c8c] transition-colors shadow-sm"
           >
             Select All
           </button>
           <button
             onClick={handleSelectNone}
-            className="text-sm px-3 py-1 bg-[#2E8A99] text-white rounded hover:bg-[#1F6E8C] transition-colors"
+            className="text-sm px-3 py-1 bg-[#8c8c8c] text-white rounded hover:bg-[#d6d6d6] hover:text-[#0b0909] transition-colors shadow-sm"
           >
             Clear All
           </button>
@@ -53,10 +53,10 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
           <Badge
             key={type}
             variant={selectedTypes.includes(type) ? "default" : "secondary"}
-            className={`cursor-pointer transition-all ${
+            className={`cursor-pointer transition-all shadow-sm ${
               selectedTypes.includes(type)
-                ? 'bg-[#2E8A99] text-white hover:bg-[#1F6E8C]'
-                : 'bg-[#84A7A1]/30 text-slate-300 hover:bg-[#84A7A1]/50'
+                ? 'bg-[#8c8c8c] text-white hover:bg-[#d6d6d6] hover:text-[#0b0909]'
+                : 'bg-[#44444c]/30 text-[#d6d6d6] hover:bg-[#44444c]/50'
             }`}
             onClick={() => handleTypeToggle(type)}
           >
@@ -65,7 +65,7 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
         ))}
       </div>
       
-      <p className="text-sm text-slate-400 mt-3">
+      <p className="text-sm text-[#8c8c8c] mt-3">
         Selected: {selectedTypes.length} of {allTypes.length} types
       </p>
     </div>
