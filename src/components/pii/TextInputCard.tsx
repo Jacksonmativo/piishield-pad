@@ -64,11 +64,9 @@ export const TextInputCard = ({
         {originalText && !showOriginal && (
           <div className="mt-4 p-4 rounded-lg border shadow-inner" style={{ backgroundColor: 'white', borderColor: '#ccc' }}>
             <div className="text-sm font-medium mb-2" style={{ color: 'darkgray' }}>Anonymized Preview:</div>
-            <div 
-              className="text-sm leading-relaxed"
-              style={{ color: 'darkgray' }}
-              dangerouslySetInnerHTML={{ __html: highlightPII(anonymizedText) }}
-            />
+            <div className="text-sm leading-relaxed whitespace-pre-wrap" style={{ color: 'darkgray' }}>
+              {anonymizedText}
+            </div>
           </div>
         )}
       </CardContent>
