@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Copy, Eye, EyeOff } from "lucide-react";
-import { highlightPII } from "@/utils/piiDetection";
+import { useState, useRef } from "react";
+import { PiiContextMenu } from "./PiiContextMenu";
 
 interface TextInputCardProps {
   originalText: string;
@@ -22,8 +23,42 @@ export const TextInputCard = ({
   setShowOriginal,
   copyToClipboard
 }: TextInputCardProps) => {
+  const [hasSelection, setHasSelection] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleSelectionChange = () => {
+    if (textareaRef.current) {
+      const start = textareaRef.current.selectionStart;
+      const end = textareaRef.current.selectionEnd;
+      setHasSelection(start !== end);
+    }
+  };
+
+  const handleAnonymize = (piiType: string) => {
+    if (!textareaRef.current) return;
+    
+    const start = textareaRef.current.selectionStart;
+    const end = textareaRef.current.selectionEnd;
+    
+    if (start === end) return;
+    
+    const selectedText = originalText.substring(start, end);
+    const placeholder = `[${piiType.toUpperCase()}_1]`;
+    
+    const newText = originalText.substring(0, start) + placeholder + originalText.substring(end);
+    setOriginalText(newText);
+    
+    // Clear selection
+    setTimeout(() => {
+      if (textareaRef.current) {
+        textareaRef.current.setSelectionRange(start + placeholder.length, start + placeholder.length);
+        textareaRef.current.focus();
+      }
+    }, 0);
+  };
+
   return (
-    <Card className="bg-white/10 backdrop-blur-md border border-white/20 shadow-xl">
+    <Card className="bg-black/20 backdrop-blur-md border border-white/10 shadow-xl">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-white flex items-center gap-2">
@@ -52,14 +87,20 @@ export const TextInputCard = ({
         </div>
       </CardHeader>
       <CardContent>
-        <Textarea
-          placeholder="Paste your content here. Any PII will be automatically detected and can be anonymized..."
-          value={originalText}
-          onChange={(e) => setOriginalText(e.target.value)}
-          className="min-h-[300px] bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-white/30 transition-all"
-        />
+        <PiiContextMenu onAnonymize={handleAnonymize} hasSelection={hasSelection}>
+          <Textarea
+            ref={textareaRef}
+            placeholder="Paste your content here. Highlight text and right-click to anonymize specific parts, or let the system auto-detect PII..."
+            value={originalText}
+            onChange={(e) => setOriginalText(e.target.value)}
+            onSelect={handleSelectionChange}
+            onMouseUp={handleSelectionChange}
+            onKeyUp={handleSelectionChange}
+            className="min-h-[300px] bg-black/10 backdrop-blur-sm border-white/20 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-white/30 transition-all"
+          />
+        </PiiContextMenu>
         {originalText && !showOriginal && (
-          <div className="mt-4 p-4 rounded-lg bg-white/5 backdrop-blur-sm border border-white/20 shadow-inner">
+          <div className="mt-4 p-4 rounded-lg bg-black/10 backdrop-blur-sm border border-white/10 shadow-inner">
             <div className="text-sm font-medium mb-2 text-gray-300">Anonymized Preview:</div>
             <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-300">
               {anonymizedText}
