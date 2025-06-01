@@ -37,8 +37,8 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
             onClick={handleSelectAll}
             className="text-sm px-3 py-1 text-white rounded transition-colors shadow-sm"
             style={{ backgroundColor: '#007bff' }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#0056b3'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#007bff'}
+            onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#0056b3'}
+            onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#007bff'}
           >
             Select All
           </button>
@@ -46,8 +46,8 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
             onClick={handleSelectNone}
             className="text-sm px-3 py-1 text-white rounded transition-colors shadow-sm"
             style={{ backgroundColor: '#007bff' }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#0056b3'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#007bff'}
+            onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#0056b3'}
+            onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#007bff'}
           >
             Clear All
           </button>

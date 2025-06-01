@@ -59,7 +59,7 @@ export const TextInputCard = ({
           value={originalText}
           onChange={(e) => setOriginalText(e.target.value)}
           className="min-h-[300px] text-black placeholder:text-gray-500 focus:ring-2 transition-all"
-          style={{ backgroundColor: 'white', borderColor: '#ccc', focusRingColor: '#249CFF' }}
+          style={{ backgroundColor: 'white', borderColor: '#ccc' }}
         />
         {originalText && !showOriginal && (
           <div className="mt-4 p-4 rounded-lg border shadow-inner" style={{ backgroundColor: 'white', borderColor: '#ccc' }}>
