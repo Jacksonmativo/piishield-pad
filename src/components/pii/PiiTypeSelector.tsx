@@ -29,25 +29,19 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
   };
 
   return (
-    <div className="mb-6 p-4 rounded-lg border shadow-xl" style={{ backgroundColor: '#fafafa', borderColor: '#ccc' }}>
+    <div className="mb-6 p-4 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 shadow-xl">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold" style={{ color: 'darkgray' }}>Select PII Types to Anonymize</h3>
+        <h3 className="text-lg font-semibold text-white">Select PII Types to Anonymize</h3>
         <div className="flex gap-2">
           <button
             onClick={handleSelectAll}
-            className="text-sm px-3 py-1 text-white rounded transition-colors shadow-sm"
-            style={{ backgroundColor: '#007bff' }}
-            onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#0056b3'}
-            onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#007bff'}
+            className="text-sm px-3 py-1 bg-white text-black rounded transition-colors shadow-sm hover:bg-gray-200"
           >
             Select All
           </button>
           <button
             onClick={handleSelectNone}
-            className="text-sm px-3 py-1 text-white rounded transition-colors shadow-sm"
-            style={{ backgroundColor: '#007bff' }}
-            onMouseEnter={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#0056b3'}
-            onMouseLeave={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#007bff'}
+            className="text-sm px-3 py-1 bg-white text-black rounded transition-colors shadow-sm hover:bg-gray-200"
           >
             Clear All
           </button>
@@ -61,12 +55,9 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
             variant={selectedTypes.includes(type) ? "default" : "secondary"}
             className={`cursor-pointer transition-all shadow-sm ${
               selectedTypes.includes(type)
-                ? 'text-white'
-                : 'text-darkgray'
+                ? 'bg-white text-black hover:bg-gray-200'
+                : 'bg-white/20 text-white hover:bg-white/30'
             }`}
-            style={{
-              backgroundColor: selectedTypes.includes(type) ? '#249CFF' : '#ccc'
-            }}
             onClick={() => handleTypeToggle(type)}
           >
             {type.replace(/_/g, ' ')}
@@ -74,7 +65,7 @@ export const PiiTypeSelector = ({ selectedTypes, onSelectionChange }: PiiTypeSel
         ))}
       </div>
       
-      <p className="text-sm mt-3" style={{ color: 'darkgray' }}>
+      <p className="text-sm mt-3 text-gray-300">
         Selected: {selectedTypes.length} of {allTypes.length} types
       </p>
     </div>

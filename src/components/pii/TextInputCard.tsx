@@ -23,11 +23,11 @@ export const TextInputCard = ({
   copyToClipboard
 }: TextInputCardProps) => {
   return (
-    <Card className="shadow-xl" style={{ backgroundColor: '#fafafa', borderColor: '#ccc' }}>
+    <Card className="bg-white/10 backdrop-blur-md border border-white/20 shadow-xl">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle style={{ color: 'darkgray' }} className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full animate-pulse shadow-lg" style={{ backgroundColor: '#249CFF' }}></div>
+          <CardTitle className="text-white flex items-center gap-2">
+            <div className="w-3 h-3 bg-white rounded-full animate-pulse shadow-lg"></div>
             Step 1: Paste Your Content
           </CardTitle>
           <div className="flex items-center gap-2">
@@ -35,8 +35,7 @@ export const TextInputCard = ({
               variant="ghost"
               size="sm"
               onClick={() => setShowOriginal(!showOriginal)}
-              className="hover:bg-gray-100"
-              style={{ color: 'darkgray' }}
+              className="hover:bg-white/10 text-white"
             >
               {showOriginal ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
             </Button>
@@ -45,8 +44,7 @@ export const TextInputCard = ({
               size="sm"
               onClick={() => copyToClipboard(showOriginal ? originalText : anonymizedText, showOriginal ? 'Original text' : 'Anonymized text')}
               disabled={!originalText}
-              className="hover:bg-gray-100"
-              style={{ color: 'darkgray' }}
+              className="hover:bg-white/10 text-white"
             >
               <Copy className="w-4 h-4" />
             </Button>
@@ -58,13 +56,12 @@ export const TextInputCard = ({
           placeholder="Paste your content here. Any PII will be automatically detected and can be anonymized..."
           value={originalText}
           onChange={(e) => setOriginalText(e.target.value)}
-          className="min-h-[300px] text-black placeholder:text-gray-500 focus:ring-2 transition-all"
-          style={{ backgroundColor: 'white', borderColor: '#ccc' }}
+          className="min-h-[300px] bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-white/30 transition-all"
         />
         {originalText && !showOriginal && (
-          <div className="mt-4 p-4 rounded-lg border shadow-inner" style={{ backgroundColor: 'white', borderColor: '#ccc' }}>
-            <div className="text-sm font-medium mb-2" style={{ color: 'darkgray' }}>Anonymized Preview:</div>
-            <div className="text-sm leading-relaxed whitespace-pre-wrap" style={{ color: 'darkgray' }}>
+          <div className="mt-4 p-4 rounded-lg bg-white/5 backdrop-blur-sm border border-white/20 shadow-inner">
+            <div className="text-sm font-medium mb-2 text-gray-300">Anonymized Preview:</div>
+            <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-300">
               {anonymizedText}
             </div>
           </div>

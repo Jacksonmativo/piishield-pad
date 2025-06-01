@@ -10,7 +10,7 @@ const COMPANY_TLDS = [
   'global', 'company' // Company-focused
 ];
 
-// Optimized PII patterns with dynamic company TLDs
+// Optimized PII patterns with resolved email/company and website/subdomain conflicts
 export const PII_PATTERNS: PiiPatterns = {
   name: {
     pattern: /\b[A-Z][a-z]+ [A-Z][a-z]+\b/gi,
@@ -48,7 +48,7 @@ export const PII_PATTERNS: PiiPatterns = {
     placeholder: 'WEBSITE'
   },
   subdomain: {
-    pattern: /\bhttps?:\/\/(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\.[a-z]{2,6}\b(?:\/[^\s]*)?/g,
+    pattern: /\bhttps?:\/\/(?![a-zA-Z0-9-]*\.?www\.)(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\.[a-z]{2,6}\b(?:\/[^\s]*)?/g,
     color: 'bg-purple-500/20 text-purple-200 border-purple-400/40',
     placeholder: 'SUBDOMAIN'
   },
@@ -58,7 +58,7 @@ export const PII_PATTERNS: PiiPatterns = {
     placeholder: 'IP_ADDRESS'
   },
   company: {
-    pattern: new RegExp(`\\b[\\w\\.-]+\\.(${COMPANY_TLDS.join('|').replace(/\./g, '\\.')})\\b`, 'gi'),
+    pattern: new RegExp(`\\b(?<!@[\\w\\.-]*)[\\w\\.-]+\\.(${COMPANY_TLDS.join('|').replace(/\./g, '\\.')})\\b`, 'gi'),
     color: 'bg-orange-500/20 text-orange-200 border-orange-400/40',
     placeholder: 'COMPANY'
   },
@@ -88,9 +88,9 @@ export const anonymizeText = (text: string, selectedTypes?: string[]) => {
   const typeOrder = [
     'subdomain',
     'website',
+    'email',
     'company',
     'name',
-    'email',
     'phone',
     'address',
     'creditCard',
@@ -164,9 +164,9 @@ export const highlightPII = (text: string, maxMatches: number = 1000) => {
   const typeOrder = [
     'subdomain',
     'website',
+    'email',
     'company',
     'name',
-    'email',
     'phone',
     'address',
     'creditCard',

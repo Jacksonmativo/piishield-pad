@@ -11,11 +11,7 @@ export const ActionButtons = ({ resetAll }: ActionButtonsProps) => {
     <div className="flex justify-center mt-8">
       <button
         onClick={resetAll}
-        className="inline-flex items-center px-4 py-2 rounded transition-all shadow-lg text-white border"
-        style={{ 
-          backgroundColor: 'red',
-          borderColor: '#ccc'
-        }}
+        className="inline-flex items-center px-4 py-2 rounded transition-all shadow-lg bg-red-600/80 backdrop-blur-sm text-white border border-red-500/50 hover:bg-red-600"
       >
         <RotateCcw className="w-4 h-4 mr-2" />
         Reset All
