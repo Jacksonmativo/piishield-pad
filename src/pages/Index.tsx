@@ -1,4 +1,3 @@
-
 import { useState, useCallback, useMemo } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { anonymizeText, reidentifyText, PII_PATTERNS } from '@/utils/piiDetection';
@@ -18,9 +17,7 @@ const Index = () => {
   const [piiMappings, setPiiMappings] = useState<PiiMappings>({});
   const [manualPiiMappings, setManualPiiMappings] = useState<PiiMappings>({});
   const [showOriginal, setShowOriginal] = useState(true);
-  const [selectedPiiTypes, setSelectedPiiTypes] = useState<string[]>(
-    Object.keys(PII_PATTERNS) // Select all types by default
-  );
+  const [selectedPiiTypes, setSelectedPiiTypes] = useState<string[]>([]);
   const { toast } = useToast();
 
   // Get anonymized version of original text

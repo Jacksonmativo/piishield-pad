@@ -1,12 +1,11 @@
 
-import { Shield, Lock, Eye, AlertTriangle } from "lucide-react";
-import { FeedbackForm } from "./FeedbackForm";
+import { Shield, Eye, AlertTriangle } from "lucide-react";
 
 export const Footer = () => {
   return (
     <footer className="mt-16 bg-black/40 backdrop-blur-md border-t border-white/20 text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* AI Safety Tips */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -15,7 +14,7 @@ export const Footer = () => {
             </div>
             <ul className="space-y-2 text-sm text-gray-300">
               <li className="flex items-start gap-2">
-                <Lock className="w-4 h-4 mt-0.5 flex-shrink-0 text-white" />
+                <Eye className="w-4 h-4 mt-0.5 flex-shrink-0 text-white" />
                 Always anonymize personal data before sharing with AI
               </li>
               <li className="flex items-start gap-2">
@@ -52,16 +51,11 @@ export const Footer = () => {
               <li>• Network ports and technical data</li>
             </ul>
           </div>
-
-          {/* Feedback Form */}
-          <div>
-            <FeedbackForm />
-          </div>
         </div>
 
         <div className="border-t border-white/20 mt-8 pt-8 text-center">
           <p className="text-sm text-white">
-            © 2024 PII Shield. Protecting your privacy in AI interactions.
+            © 2025 PII Shield. Protecting your privacy in AI interactions.
           </p>
         </div>
       </div>
