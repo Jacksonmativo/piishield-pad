@@ -16,6 +16,7 @@ const Index = () => {
   const [originalText, setOriginalText] = useState('');
   const [aiResponse, setAiResponse] = useState('');
   const [piiMappings, setPiiMappings] = useState<PiiMappings>({});
+  const [manualPiiMappings, setManualPiiMappings] = useState<PiiMappings>({});
   const [showOriginal, setShowOriginal] = useState(true);
   const [selectedPiiTypes, setSelectedPiiTypes] = useState<string[]>([
     'NAME', 'EMAIL', 'PHONE', 'ADDRESS', 'CREDIT_CARD', 'SSN'
@@ -30,10 +31,28 @@ const Index = () => {
     return result.anonymizedText;
   }, [originalText, selectedPiiTypes]);
 
+  // Combine auto-detected and manual PII mappings
+  const allPiiMappings = useMemo(() => {
+    return { ...piiMappings, ...manualPiiMappings };
+  }, [piiMappings, manualPiiMappings]);
+
   // Get re-identified version of AI response
   const reidentifiedResponse = useMemo(() => {
-    return aiResponse ? reidentifyText(aiResponse, piiMappings) : '';
-  }, [aiResponse, piiMappings]);
+    return aiResponse ? reidentifyText(aiResponse, allPiiMappings) : '';
+  }, [aiResponse, allPiiMappings]);
+
+  const handleManualAnonymization = useCallback((type: string, originalValue: string) => {
+    const placeholder = `[${type.toUpperCase()}_MANUAL_${Date.now()}]`;
+    setManualPiiMappings(prev => ({
+      ...prev,
+      [placeholder]: originalValue
+    }));
+    
+    toast({
+      title: "Manual anonymization added",
+      description: `"${originalValue}" anonymized as ${type.toUpperCase()}`,
+    });
+  }, [toast]);
 
   const copyToClipboard = async (text: string, label: string) => {
     try {
@@ -55,13 +74,14 @@ const Index = () => {
     setOriginalText('');
     setAiResponse('');
     setPiiMappings({});
+    setManualPiiMappings({});
     toast({
       title: "Reset complete",
       description: "All data cleared and mappings reset",
     });
   };
 
-  const detectedPIICount = Object.keys(piiMappings).length;
+  const detectedPIICount = Object.keys(allPiiMappings).length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
@@ -83,6 +103,7 @@ const Index = () => {
             showOriginal={showOriginal}
             setShowOriginal={setShowOriginal}
             copyToClipboard={copyToClipboard}
+            onManualAnonymization={handleManualAnonymization}
           />
 
           <ResponseCard
@@ -93,7 +114,7 @@ const Index = () => {
           />
         </div>
 
-        <PiiMappingsDisplay piiMappings={piiMappings} />
+        <PiiMappingsDisplay piiMappings={allPiiMappings} />
 
         <ActionButtons resetAll={resetAll} />
       </div>

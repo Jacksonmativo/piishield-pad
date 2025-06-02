@@ -13,6 +13,7 @@ interface TextInputCardProps {
   showOriginal: boolean;
   setShowOriginal: (show: boolean) => void;
   copyToClipboard: (text: string, label: string) => void;
+  onManualAnonymization?: (type: string, originalValue: string) => void;
 }
 
 export const TextInputCard = ({
@@ -21,7 +22,8 @@ export const TextInputCard = ({
   anonymizedText,
   showOriginal,
   setShowOriginal,
-  copyToClipboard
+  copyToClipboard,
+  onManualAnonymization
 }: TextInputCardProps) => {
   const [hasSelection, setHasSelection] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -43,10 +45,15 @@ export const TextInputCard = ({
     if (start === end) return;
     
     const selectedText = originalText.substring(start, end);
-    const placeholder = `[${piiType.toUpperCase()}_1]`;
+    const placeholder = `[${piiType.toUpperCase()}_MANUAL_${Date.now()}]`;
     
     const newText = originalText.substring(0, start) + placeholder + originalText.substring(end);
     setOriginalText(newText);
+    
+    // Notify parent about manual anonymization
+    if (onManualAnonymization) {
+      onManualAnonymization(piiType, selectedText);
+    }
     
     // Clear selection
     setTimeout(() => {
@@ -58,7 +65,7 @@ export const TextInputCard = ({
   };
 
   return (
-    <Card className="bg-black/20 backdrop-blur-md border border-white/10 shadow-xl">
+    <Card className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-white flex items-center gap-2">
@@ -96,11 +103,11 @@ export const TextInputCard = ({
             onSelect={handleSelectionChange}
             onMouseUp={handleSelectionChange}
             onKeyUp={handleSelectionChange}
-            className="min-h-[300px] bg-black/10 backdrop-blur-sm border-white/20 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-white/30 transition-all"
+            className="min-h-[300px] bg-black/20 backdrop-blur-sm border-white/20 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-white/30 transition-all"
           />
         </PiiContextMenu>
         {originalText && !showOriginal && (
-          <div className="mt-4 p-4 rounded-lg bg-black/10 backdrop-blur-sm border border-white/10 shadow-inner">
+          <div className="mt-4 p-4 rounded-lg bg-black/20 backdrop-blur-sm border border-white/10 shadow-inner">
             <div className="text-sm font-medium mb-2 text-gray-300">Anonymized Preview:</div>
             <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-300">
               {anonymizedText}
