@@ -2,12 +2,15 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageSquare, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export const FeedbackForm = () => {
   const [feedback, setFeedback] = useState('');
+  const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -18,9 +21,10 @@ export const FeedbackForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Create mailto link to send feedback
+      // Create mailto link to send feedback with user's email included
       const subject = encodeURIComponent('PII Shield Feedback');
-      const body = encodeURIComponent(feedback);
+      const emailInfo = email ? `From: ${email}\n\n` : '';
+      const body = encodeURIComponent(`${emailInfo}${feedback}`);
       const mailtoLink = `mailto:anonpad0@gmail.com?subject=${subject}&body=${body}`;
       
       window.open(mailtoLink, '_blank');
@@ -30,6 +34,7 @@ export const FeedbackForm = () => {
         description: "Your feedback email has been prepared. Please send it from your email client.",
       });
       setFeedback('');
+      setEmail('');
     } catch (error) {
       toast({
         title: "Error",
@@ -51,12 +56,31 @@ export const FeedbackForm = () => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <Textarea
-            placeholder="Share your thoughts, suggestions, or report issues..."
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            className="min-h-[100px] bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-white/30"
-          />
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-white text-sm">
+              Your Email (optional)
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="your@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-white/30"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="feedback" className="text-white text-sm">
+              Your Feedback
+            </Label>
+            <Textarea
+              id="feedback"
+              placeholder="Share your thoughts, suggestions, or report issues..."
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              className="min-h-[100px] bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-white/30"
+            />
+          </div>
           <Button
             type="submit"
             disabled={!feedback.trim() || isSubmitting}
