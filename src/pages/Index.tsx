@@ -1,7 +1,7 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import { anonymizeText, reidentifyText } from '@/utils/piiDetection';
+import { anonymizeText, reidentifyText, PII_PATTERNS } from '@/utils/piiDetection';
 import { PiiMappings } from '@/types/pii';
 import { Header } from '@/components/pii/Header';
 import { StatsBar } from '@/components/pii/StatsBar';
@@ -18,9 +18,9 @@ const Index = () => {
   const [piiMappings, setPiiMappings] = useState<PiiMappings>({});
   const [manualPiiMappings, setManualPiiMappings] = useState<PiiMappings>({});
   const [showOriginal, setShowOriginal] = useState(true);
-  const [selectedPiiTypes, setSelectedPiiTypes] = useState<string[]>([
-    'NAME', 'EMAIL', 'PHONE', 'ADDRESS', 'CREDIT_CARD', 'SSN'
-  ]);
+  const [selectedPiiTypes, setSelectedPiiTypes] = useState<string[]>(
+    Object.keys(PII_PATTERNS) // Select all types by default
+  );
   const { toast } = useToast();
 
   // Get anonymized version of original text
@@ -87,6 +87,13 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
       <div className="container mx-auto px-4 py-8">
         <Header />
+        
+        {/* Privacy Disclaimer */}
+        <div className="mb-6 p-3 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 shadow-xl">
+          <p className="text-sm text-gray-300 text-center">
+            🔒 This app does not store or transmit your data. All processing happens in your browser.
+          </p>
+        </div>
         
         <StatsBar detectedPIICount={detectedPIICount} showOriginal={showOriginal} />
 

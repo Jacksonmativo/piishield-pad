@@ -17,15 +17,28 @@ export const FeedbackForm = () => {
 
     setIsSubmitting(true);
     
-    // Simulate submission
-    setTimeout(() => {
+    try {
+      // Create mailto link to send feedback
+      const subject = encodeURIComponent('PII Shield Feedback');
+      const body = encodeURIComponent(feedback);
+      const mailtoLink = `mailto:anonpad0@gmail.com?subject=${subject}&body=${body}`;
+      
+      window.open(mailtoLink, '_blank');
+      
       toast({
-        title: "Feedback submitted",
-        description: "Thank you for your feedback! We appreciate your input.",
+        title: "Email client opened",
+        description: "Your feedback email has been prepared. Please send it from your email client.",
       });
       setFeedback('');
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to open email client. Please contact anonpad0@gmail.com directly.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -50,7 +63,7 @@ export const FeedbackForm = () => {
             className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
           >
             <Send className="w-4 h-4 mr-2" />
-            {isSubmitting ? 'Sending...' : 'Send Feedback'}
+            {isSubmitting ? 'Opening Email...' : 'Send Feedback'}
           </Button>
         </form>
       </CardContent>
