@@ -1,7 +1,8 @@
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Copy, Eye, EyeOff } from "lucide-react";
+import { Copy, Eye, EyeOff, Clipboard } from "lucide-react";
 import { useState, useRef } from "react";
 import { PiiContextMenu } from "./PiiContextMenu";
 
@@ -12,6 +13,7 @@ interface TextInputCardProps {
   showOriginal: boolean;
   setShowOriginal: (show: boolean) => void;
   copyToClipboard: (text: string, label: string) => void;
+  pasteFromClipboard: (setter: (text: string) => void, label: string) => void;
   onManualAnonymization?: (type: string, originalValue: string) => void;
 }
 
@@ -22,6 +24,7 @@ export const TextInputCard = ({
   showOriginal,
   setShowOriginal,
   copyToClipboard,
+  pasteFromClipboard,
   onManualAnonymization
 }: TextInputCardProps) => {
   const [hasSelection, setHasSelection] = useState(false);
@@ -71,14 +74,24 @@ export const TextInputCard = ({
             <div className="w-3 h-3 bg-white rounded-full animate-pulse shadow-lg"></div>
             Step 1: Paste Your Content
           </CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowOriginal(!showOriginal)}
-            className="hover:bg-white/10 text-white"
-          >
-            {showOriginal ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => pasteFromClipboard(setOriginalText, 'Content')}
+              className="hover:bg-white/10 text-white"
+            >
+              <Clipboard className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowOriginal(!showOriginal)}
+              className="hover:bg-white/10 text-white"
+            >
+              {showOriginal ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+            </Button>
+          </div>
         </div>
       </CardHeader>
       <CardContent>

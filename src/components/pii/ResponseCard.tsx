@@ -2,28 +2,40 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Copy } from "lucide-react";
+import { Copy, Clipboard } from "lucide-react";
 
 interface ResponseCardProps {
   aiResponse: string;
   setAiResponse: (response: string) => void;
   reidentifiedResponse: string;
   copyToClipboard: (text: string, label: string) => void;
+  pasteFromClipboard: (setter: (text: string) => void, label: string) => void;
 }
 
 export const ResponseCard = ({
   aiResponse,
   setAiResponse,
   reidentifiedResponse,
-  copyToClipboard
+  copyToClipboard,
+  pasteFromClipboard
 }: ResponseCardProps) => {
   return (
     <Card className="bg-white/10 backdrop-blur-md border border-white/20 shadow-xl">
       <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
-          <div className="w-3 h-3 bg-white rounded-full shadow-lg"></div>
-          Step 2: Paste AI Response
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-white flex items-center gap-2">
+            <div className="w-3 h-3 bg-white rounded-full shadow-lg"></div>
+            Step 2: Paste AI Response
+          </CardTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => pasteFromClipboard(setAiResponse, 'AI Response')}
+            className="hover:bg-white/10 text-white"
+          >
+            <Clipboard className="w-4 h-4" />
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         <Textarea
