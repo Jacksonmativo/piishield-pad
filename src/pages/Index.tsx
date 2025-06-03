@@ -86,9 +86,9 @@ const Index = () => {
         <Header />
         
         {/* Privacy Disclaimer */}
-        <div className="mb-6 p-3 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 shadow-xl">
-          <p className="text-sm text-gray-300 text-center">
-            🔒 This app does not store or transmit your data. All processing happens in your browser.
+        <div className="mb-6 p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-md border border-blue-500/20 shadow-xl">
+          <p className="text-sm text-blue-100 text-center font-medium">
+            This app does not store or transmit your data. All processing happens in your browser.
           </p>
         </div>
         

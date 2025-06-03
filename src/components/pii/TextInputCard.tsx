@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -72,25 +71,14 @@ export const TextInputCard = ({
             <div className="w-3 h-3 bg-white rounded-full animate-pulse shadow-lg"></div>
             Step 1: Paste Your Content
           </CardTitle>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowOriginal(!showOriginal)}
-              className="hover:bg-white/10 text-white"
-            >
-              {showOriginal ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => copyToClipboard(showOriginal ? originalText : anonymizedText, showOriginal ? 'Original text' : 'Anonymized text')}
-              disabled={!originalText}
-              className="hover:bg-white/10 text-white"
-            >
-              <Copy className="w-4 h-4" />
-            </Button>
-          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowOriginal(!showOriginal)}
+            className="hover:bg-white/10 text-white"
+          >
+            {showOriginal ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+          </Button>
         </div>
       </CardHeader>
       <CardContent>
@@ -107,8 +95,18 @@ export const TextInputCard = ({
           />
         </PiiContextMenu>
         {originalText && !showOriginal && (
-          <div className="mt-4 p-4 rounded-lg bg-black/20 backdrop-blur-sm border border-white/10 shadow-inner">
-            <div className="text-sm font-medium mb-2 text-gray-300">Anonymized Preview:</div>
+          <div className="mt-4 p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-blue-500/10 backdrop-blur-sm border border-green-500/20 shadow-inner">
+            <div className="flex justify-between items-center mb-2">
+              <div className="text-sm font-medium text-green-200">Anonymized Preview:</div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => copyToClipboard(anonymizedText, 'Anonymized text')}
+                className="h-6 px-2 hover:bg-green-500/20 text-green-200 border border-green-500/30"
+              >
+                <Copy className="w-3 h-3" />
+              </Button>
+            </div>
             <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-300">
               {anonymizedText}
             </div>

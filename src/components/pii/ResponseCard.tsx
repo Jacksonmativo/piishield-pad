@@ -20,21 +20,10 @@ export const ResponseCard = ({
   return (
     <Card className="bg-white/10 backdrop-blur-md border border-white/20 shadow-xl">
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-white flex items-center gap-2">
-            <div className="w-3 h-3 bg-white rounded-full shadow-lg"></div>
-            Step 2: Paste AI Response
-          </CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => copyToClipboard(reidentifiedResponse, 'Re-identified response')}
-            disabled={!aiResponse}
-            className="hover:bg-white/10 text-white"
-          >
-            <Copy className="w-4 h-4" />
-          </Button>
-        </div>
+        <CardTitle className="text-white flex items-center gap-2">
+          <div className="w-3 h-3 bg-white rounded-full shadow-lg"></div>
+          Step 2: Paste AI Response
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <Textarea
@@ -44,14 +33,14 @@ export const ResponseCard = ({
           className="min-h-[300px] bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-white/30 transition-all"
         />
         {aiResponse && (
-          <div className="mt-4 p-4 rounded-lg bg-white/5 backdrop-blur-sm border border-white/20 shadow-inner">
+          <div className="mt-4 p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-purple-500/20 shadow-inner">
             <div className="flex justify-between items-center mb-2">
-              <div className="text-sm font-medium text-gray-300">Re-identified Preview:</div>
+              <div className="text-sm font-medium text-purple-200">Re-identified Preview:</div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => copyToClipboard(reidentifiedResponse, 'Re-identified response')}
-                className="h-6 px-2 hover:bg-white/10 text-white"
+                className="h-6 px-2 hover:bg-purple-500/20 text-purple-200 border border-purple-500/30"
               >
                 <Copy className="w-3 h-3" />
               </Button>
