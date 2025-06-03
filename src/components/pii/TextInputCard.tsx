@@ -43,16 +43,16 @@ export const TextInputCard = ({
   const handleAnonymize = (piiType: string) => {
     if (!textareaRef.current) return;
     
-    // Use the stored selection instead of current selection to avoid issues with auto-anonymization
     const start = currentSelection.start;
     const end = currentSelection.end;
     
     if (start === end) return;
     
-    // Get the selected text from the ORIGINAL text, not the displayed text
+    // Get the selected text from the current text in the textarea
     const selectedText = originalText.substring(start, end);
     const placeholder = `[${piiType.toUpperCase()}_MANUAL_${Date.now()}]`;
     
+    // Replace the selected text with the placeholder
     const newText = originalText.substring(0, start) + placeholder + originalText.substring(end);
     setOriginalText(newText);
     
@@ -61,10 +61,15 @@ export const TextInputCard = ({
       onManualAnonymization(piiType, selectedText);
     }
     
-    // Clear selection
+    // Clear selection and position cursor after the placeholder
+    setHasSelection(false);
+    setCurrentSelection({ start: 0, end: 0 });
+    
+    // Focus and position cursor after the replacement
     setTimeout(() => {
       if (textareaRef.current) {
-        textareaRef.current.setSelectionRange(start + placeholder.length, start + placeholder.length);
+        const newCursorPosition = start + placeholder.length;
+        textareaRef.current.setSelectionRange(newCursorPosition, newCursorPosition);
         textareaRef.current.focus();
       }
     }, 0);
