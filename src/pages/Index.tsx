@@ -1,5 +1,4 @@
-
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { anonymizeText, reidentifyText, PII_PATTERNS } from '@/utils/piiDetection';
 import { PiiMappings } from '@/types/pii';
@@ -15,6 +14,7 @@ import { Shield, Lock } from 'lucide-react';
 
 const Index = () => {
   const [originalText, setOriginalText] = useState('');
+  const [anonymizedText, setAnonymizedText] = useState('');
   const [aiResponse, setAiResponse] = useState('');
   const [piiMappings, setPiiMappings] = useState<PiiMappings>({});
   const [manualPiiMappings, setManualPiiMappings] = useState<PiiMappings>({});
@@ -22,20 +22,31 @@ const Index = () => {
   const [selectedPiiTypes, setSelectedPiiTypes] = useState<string[]>([]);
   const { toast } = useToast();
 
-  // Get anonymized version of original text
-  const anonymizedText = useMemo(() => {
-    if (!originalText) return '';
-    const result = anonymizeText(originalText, selectedPiiTypes);
-    setPiiMappings(result.mappings);
-    return result.anonymizedText;
-  }, [originalText, selectedPiiTypes]);
+  useEffect(() => {
+    if (!originalText || selectedPiiTypes.length === 0) {
+      setAnonymizedText(originalText);
+      setPiiMappings({});
+      return;
+    }
 
-  // Combine auto-detected and manual PII mappings
+    const result = anonymizeText(originalText, selectedPiiTypes);
+    let combinedText = result.anonymizedText;
+    let combinedMappings = { ...result.mappings };
+
+    for (const [placeholder, original] of Object.entries(manualPiiMappings)) {
+      const escaped = original.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      combinedText = combinedText.replace(new RegExp(escaped, 'g'), placeholder);
+      combinedMappings[placeholder] = original;
+    }
+
+    setAnonymizedText(combinedText);
+    setPiiMappings(combinedMappings);
+  }, [originalText, selectedPiiTypes, manualPiiMappings]);
+
   const allPiiMappings = useMemo(() => {
     return { ...piiMappings, ...manualPiiMappings };
   }, [piiMappings, manualPiiMappings]);
 
-  // Get re-identified version of AI response
   const reidentifiedResponse = useMemo(() => {
     return aiResponse ? reidentifyText(aiResponse, allPiiMappings) : '';
   }, [aiResponse, allPiiMappings]);
@@ -46,7 +57,7 @@ const Index = () => {
       ...prev,
       [placeholder]: originalValue
     }));
-    
+
     toast({
       title: "Manual anonymization added",
       description: `"${originalValue}" anonymized as ${type.toUpperCase()}`,
@@ -103,8 +114,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
       <div className="container mx-auto px-4 py-8">
         <Header />
-        
-        {/* Privacy Disclaimer */}
+
         <div className="mb-6 p-6 rounded-xl bg-gradient-to-r from-emerald-500/10 via-blue-500/10 to-purple-500/10 backdrop-blur-md border border-emerald-500/20 shadow-2xl relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-purple-500/5 animate-pulse"></div>
           <div className="relative flex items-center justify-center gap-3">
@@ -119,7 +129,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-        
+
         <StatsBar detectedPIICount={detectedPIICount} showOriginal={showOriginal} />
 
         <PiiTypeSelector 
@@ -152,7 +162,7 @@ const Index = () => {
 
         <ActionButtons resetAll={resetAll} />
       </div>
-      
+
       <Footer />
     </div>
   );

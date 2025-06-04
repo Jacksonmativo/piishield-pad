@@ -48,7 +48,7 @@ export const PII_PATTERNS: PiiPatterns = {
     placeholder: 'WEBSITE'
   },
   subdomain: {
-    pattern: /\bhttps?:\/\/(?![a-zA-Z0-9-]*\.?www\.)(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\.[a-z]{2,6}\b(?:\/[^\s]*)?/g,
+    pattern: /\b(?:(?:https?:\/\/)?(?![a-zA-Z0-9-]*\.?www\.)(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\.[a-z]{2,6}\b)(?:\/[^\s]*)?/g,
     color: 'bg-purple-500/20 text-purple-200 border-purple-400/40',
     placeholder: 'SUBDOMAIN'
   },
