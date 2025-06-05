@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Copy, Eye, EyeOff } from "lucide-react";
+import { Copy, Eye, EyeOff, Clipboard } from "lucide-react";
 import { useState, useRef } from "react";
 import { PiiContextMenu } from "./PiiContextMenu";
 
@@ -13,6 +13,7 @@ interface TextInputCardProps {
   showOriginal: boolean;
   setShowOriginal: (show: boolean) => void;
   copyToClipboard: (text: string, label: string) => void;
+  pasteFromClipboard: (setter: (text: string) => void, label: string) => void;
   onManualAnonymization?: (type: string, originalValue: string) => void;
 }
 
@@ -23,6 +24,7 @@ export const TextInputCard = ({
   showOriginal,
   setShowOriginal,
   copyToClipboard,
+  pasteFromClipboard,
   onManualAnonymization
 }: TextInputCardProps) => {
   const [hasSelection, setHasSelection] = useState(false);
@@ -84,11 +86,10 @@ export const TextInputCard = ({
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => copyToClipboard(showOriginal ? originalText : anonymizedText, showOriginal ? 'Original text' : 'Anonymized text')}
-              disabled={!originalText}
+              onClick={() => pasteFromClipboard(setOriginalText, 'Original text')}
               className="hover:bg-white/10 text-white"
             >
-              <Copy className="w-4 h-4" />
+              <Clipboard className="w-4 h-4" />
             </Button>
           </div>
         </div>
@@ -108,7 +109,17 @@ export const TextInputCard = ({
         </PiiContextMenu>
         {originalText && !showOriginal && (
           <div className="mt-4 p-4 rounded-lg bg-black/20 backdrop-blur-sm border border-white/10 shadow-inner">
-            <div className="text-sm font-medium mb-2 text-gray-300">Anonymized Preview:</div>
+            <div className="flex justify-between items-center mb-2">
+              <div className="text-sm font-medium text-gray-300">Anonymized Preview:</div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => copyToClipboard(anonymizedText, 'Anonymized text')}
+                className="h-6 px-2 hover:bg-white/10 text-gray-300 border border-white/20"
+              >
+                <Copy className="w-3 h-3" />
+              </Button>
+            </div>
             <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-300">
               {anonymizedText}
             </div>
