@@ -57,7 +57,7 @@ export const ResponseCard = ({
                 <Copy className="w-3 h-3" />
               </Button>
             </div>
-            <div className="text-sm leading-relaxed whitespace-pre-wrap text-gray-300">
+            <div className="text-sm leading-relaxed whitespace-pre-wrap break-words overflow-wrap-anywhere text-gray-300 word-break-break-all">
               {reidentifiedResponse}
             </div>
           </div>

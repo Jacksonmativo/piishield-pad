@@ -13,6 +13,7 @@ interface TextInputCardProps {
   showOriginal: boolean;
   setShowOriginal: (show: boolean) => void;
   copyToClipboard: (text: string, label: string) => void;
+  pasteFromClipboard: (setter: (text: string) => void, label: string) => void;
   onManualAnonymization?: (type: string, originalValue: string) => void;
 }
 
@@ -23,6 +24,7 @@ export const TextInputCard = ({
   showOriginal,
   setShowOriginal,
   copyToClipboard,
+  pasteFromClipboard,
   onManualAnonymization
 }: TextInputCardProps) => {
   const [hasSelection, setHasSelection] = useState(false);
@@ -76,6 +78,14 @@ export const TextInputCard = ({
             <Button
               variant="ghost"
               size="sm"
+              onClick={() => pasteFromClipboard(setOriginalText, 'Original text')}
+              className="hover:bg-white/10 text-white"
+            >
+              <Clipboard className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setShowOriginal(!showOriginal)}
               className="hover:bg-white/10 text-white"
             >
@@ -110,7 +120,7 @@ export const TextInputCard = ({
                 <Copy className="w-3 h-3" />
               </Button>
             </div>
-            <div className="text-sm leading-relaxed whitespace-pre-wrap break-words overflow-wrap-anywhere text-gray-300">
+            <div className="text-sm leading-relaxed whitespace-pre-wrap break-words overflow-wrap-anywhere text-gray-300 word-break-break-all">
               {anonymizedText}
             </div>
           </div>
