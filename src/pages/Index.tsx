@@ -1,3 +1,4 @@
+
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { anonymizeText, reidentifyText, PII_PATTERNS } from '@/utils/piiDetection';
@@ -145,7 +146,6 @@ const Index = () => {
             showOriginal={showOriginal}
             setShowOriginal={setShowOriginal}
             copyToClipboard={copyToClipboard}
-            pasteFromClipboard={pasteFromClipboard}
             onManualAnonymization={handleManualAnonymization}
           />
 
