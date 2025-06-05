@@ -1,5 +1,6 @@
 
-import { Shield, Eye, AlertTriangle } from "lucide-react";
+import { Shield, Eye, AlertTriangle, Coffee } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const Footer = () => {
   return (
@@ -53,10 +54,28 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/20 mt-8 pt-8 text-center">
-          <p className="text-sm text-white">
-            © 2025 PII Shield. Protecting your privacy in AI interactions.
-          </p>
+        <div className="border-t border-white/20 mt-8 pt-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-white">
+              © 2025 PII Shield. Protecting your privacy in AI interactions.
+            </p>
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="bg-yellow-500/20 border-yellow-500/30 text-yellow-100 hover:bg-yellow-500/30 hover:text-yellow-50 transition-colors"
+            >
+              <a
+                href="https://buymeacoffee.com/piishield"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <Coffee className="w-4 h-4" />
+                Buy me a coffee
+              </a>
+            </Button>
+          </div>
         </div>
       </div>
     </footer>
