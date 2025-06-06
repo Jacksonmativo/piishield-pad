@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,28 +27,28 @@ export const TextInputCard = ({
   onManualAnonymization
 }: TextInputCardProps) => {
   const [hasSelection, setHasSelection] = useState(false);
+  const [selectionStart, setSelectionStart] = useState(0);
+  const [selectionEnd, setSelectionEnd] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSelectionChange = () => {
     if (textareaRef.current) {
       const start = textareaRef.current.selectionStart;
       const end = textareaRef.current.selectionEnd;
+      setSelectionStart(start);
+      setSelectionEnd(end);
       setHasSelection(start !== end);
     }
   };
 
   const handleAnonymize = (piiType: string) => {
-    if (!textareaRef.current) return;
+    if (!textareaRef.current || selectionStart === selectionEnd) return;
     
-    const start = textareaRef.current.selectionStart;
-    const end = textareaRef.current.selectionEnd;
-    
-    if (start === end) return;
-    
-    const selectedText = originalText.substring(start, end);
+    const selectedText = originalText.substring(selectionStart, selectionEnd);
     const placeholder = `[${piiType.toUpperCase()}_MANUAL_${Date.now()}]`;
     
-    const newText = originalText.substring(0, start) + placeholder + originalText.substring(end);
+    // Replace only the selected portion of text
+    const newText = originalText.substring(0, selectionStart) + placeholder + originalText.substring(selectionEnd);
     setOriginalText(newText);
     
     // Notify parent about manual anonymization
@@ -57,11 +56,13 @@ export const TextInputCard = ({
       onManualAnonymization(piiType, selectedText);
     }
     
-    // Clear selection
+    // Clear selection and position cursor after the placeholder
     setTimeout(() => {
       if (textareaRef.current) {
-        textareaRef.current.setSelectionRange(start + placeholder.length, start + placeholder.length);
+        const newCursorPosition = selectionStart + placeholder.length;
+        textareaRef.current.setSelectionRange(newCursorPosition, newCursorPosition);
         textareaRef.current.focus();
+        setHasSelection(false);
       }
     }, 0);
   };
