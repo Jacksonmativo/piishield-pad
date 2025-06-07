@@ -61,10 +61,10 @@ export const Footer = () => {
                 <span>Send feedback to:</span>
               </div>
               <a 
-                href="mailto:anonpad0@gmail.com" 
+                href="mailto:jacksonmativo21@gmail.com" 
                 className="block text-sm text-blue-300 hover:text-blue-200 transition-colors break-all"
               >
-                anonpad0@gmail.com
+                jacksonmativo21@gmail.com
               </a>
               <p className="text-xs text-gray-400">
                 We value your suggestions and bug reports to improve PII Shield.
@@ -86,7 +86,7 @@ export const Footer = () => {
                 className="bg-blue-500/20 border-blue-500/30 text-blue-100 hover:bg-blue-500/30 hover:text-blue-50 transition-colors"
               >
                 <a
-                  href="mailto:anonpad0@gmail.com"
+                  href="mailto:jacksonmativo21@gmail.com"
                   className="flex items-center gap-2"
                 >
                   <Mail className="w-4 h-4" />

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,7 +24,7 @@ export const FeedbackForm = () => {
       const subject = encodeURIComponent('PII Shield Feedback');
       const emailInfo = email ? `From: ${email}\n\n` : '';
       const body = encodeURIComponent(`${emailInfo}${feedback}`);
-      const mailtoLink = `mailto:anonpad0@gmail.com?subject=${subject}&body=${body}`;
+      const mailtoLink = `mailto:jacksonmativo21@gmail.com?subject=${subject}&body=${body}`;
       
       window.open(mailtoLink, '_blank');
       
@@ -38,7 +37,7 @@ export const FeedbackForm = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to open email client. Please contact anonpad0@gmail.com directly.",
+        description: "Failed to open email client. Please contact jacksonmativo21@gmail.com directly.",
         variant: "destructive",
       });
     } finally {
