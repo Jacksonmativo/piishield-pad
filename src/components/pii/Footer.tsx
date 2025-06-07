@@ -1,12 +1,11 @@
-
-import { Shield, Eye, AlertTriangle, Coffee } from "lucide-react";
+import { Shield, Eye, AlertTriangle, Coffee, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Footer = () => {
   return (
     <footer className="mt-16 bg-black/40 backdrop-blur-md border-t border-white/20 text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* AI Safety Tips */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -52,6 +51,26 @@ export const Footer = () => {
               <li>• Network ports and technical data</li>
             </ul>
           </div>
+
+          {/* Contact & Feedback */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-white">Contact & Feedback</h3>
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-sm text-gray-300">
+                <Mail className="w-4 h-4 text-white" />
+                <span>Send feedback to:</span>
+              </div>
+              <a 
+                href="mailto:anonpad0@gmail.com" 
+                className="block text-sm text-blue-300 hover:text-blue-200 transition-colors break-all"
+              >
+                anonpad0@gmail.com
+              </a>
+              <p className="text-xs text-gray-400">
+                We value your suggestions and bug reports to improve PII Shield.
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="border-t border-white/20 mt-8 pt-8">
@@ -59,22 +78,38 @@ export const Footer = () => {
             <p className="text-sm text-white">
               © 2025 PII Shield. Protecting your privacy in AI interactions.
             </p>
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="bg-yellow-500/20 border-yellow-500/30 text-yellow-100 hover:bg-yellow-500/30 hover:text-yellow-50 transition-colors"
-            >
-              <a
-                href="https://buymeacoffee.com/piishield"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
+            <div className="flex items-center gap-4">
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="bg-blue-500/20 border-blue-500/30 text-blue-100 hover:bg-blue-500/30 hover:text-blue-50 transition-colors"
               >
-                <Coffee className="w-4 h-4" />
-                Buy me a coffee
-              </a>
-            </Button>
+                <a
+                  href="mailto:anonpad0@gmail.com"
+                  className="flex items-center gap-2"
+                >
+                  <Mail className="w-4 h-4" />
+                  Contact Us
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="bg-yellow-500/20 border-yellow-500/30 text-yellow-100 hover:bg-yellow-500/30 hover:text-yellow-50 transition-colors"
+              >
+                <a
+                  href="https://buymeacoffee.com/piishield"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <Coffee className="w-4 h-4" />
+                  Buy me a coffee
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
